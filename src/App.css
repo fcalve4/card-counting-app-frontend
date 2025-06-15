@@ -1,5 +1,3 @@
-
-
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -11,3 +9,12 @@
   color: white;
 }
 
+.Deal-button {
+  background-color: #bccdd1;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 20px;
+}
