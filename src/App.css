@@ -11,6 +11,7 @@
 
 .Deal-button {
   background-color: #bccdd1;
+  color: #282c34;
   border: none;
   padding: 20px 40px;
   font-size: 3.5rem;
@@ -81,7 +82,7 @@
 }
 
 .card-image {
-  width: 120px;
+  width: 200px;
   height: auto;
   margin: 10px;
   border-radius: 8px;
