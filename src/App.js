@@ -49,19 +49,45 @@ function App() {
 
   return (
     <div className="App">
+      <header className="top-navbar">
+        <h1 className="logo">🃏 Hi-Lo Trainer</h1>
+        <nav className="nav-links">
+          <a href="/">Home</a>
+          <a href="/about">About</a>
+          <a href="/stats">Stats</a>
+        </nav>
+      </header>
+
       <div className="App-header">
-        <h1>Welcome to the Hi-Lo Trainer App</h1>
-        <button className="Deal-button" onClick={fetchGameData}>Deal</button>
+  <div className="game-layout">
+    <div className="game-left">
+      <p><strong>Running Count:</strong> {runningCount}</p>
+      <p><strong>Status:</strong> {message}</p>
+    </div>
 
-        <p><strong>Status:</strong> {message}</p>
-        <p><strong>Running Count:</strong> {runningCount}</p>
+    <div className="game-center">
+  {cards.length === 0 ? (
+    <img
+      src="/cards/back_dark.png" // or any placeholder like "AS.png"
+      alt="Card back"
+      className="card-image"
+    />
+  ) : (
+    <img
+      src={`/cards/${cards[cards.length - 1]}.png`}
+      alt={cards[cards.length - 1]}
+      className="card-image"
+    />
+  )}
+</div>
 
-        <h3>Cards Dealt:</h3>
-        <ul>
-          {cards.map((card, index) => (
-            <li key={index}>{card}</li>
-          ))}
-        </ul>
+
+
+    <div className="game-right">
+      <button className="Deal-button" onClick={fetchGameData}>Deal</button>
+    </div>
+  </div>
+
 
         <pre>{output}</pre> {/* Optional raw output */}
       </div>

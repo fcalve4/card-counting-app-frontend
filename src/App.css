@@ -12,9 +12,78 @@
 .Deal-button {
   background-color: #bccdd1;
   border: none;
-  padding: 10px 20px;
-  font-size: 1.5rem;
+  padding: 20px 40px;
+  font-size: 3.5rem;
   cursor: pointer;
   border-radius: 5px;
   margin-top: 20px;
+}
+
+.top-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #222;
+  padding: 10px 20px;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+  font-size: 1rem;
+}
+
+.nav-links a:hover {
+  text-decoration: underline;
+}
+
+.App-content {
+  padding: 20px;
+}
+
+.game-layout {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+.game-left, .game-center, .game-right {
+  flex: 1;
+  text-align: center;
+}
+
+/* Align left and right sides */
+.game-left {
+  text-align: left;
+}
+
+.game-right {
+  text-align: right;
+}
+
+/* Optional: style the card display */
+.game-center h1 {
+  font-size: 4rem;
+  margin: 0;
+}
+
+.card-image {
+  width: 120px;
+  height: auto;
+  margin: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
 }
