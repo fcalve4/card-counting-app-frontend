@@ -7,6 +7,7 @@ function App() {
   const [runningCount, setRunningCount] = useState(0);
   const [cards, setCards] = useState([]);
   const [cardsRemaining, setCardsRemaining] = useState(0);
+  const [decksRemaining, setDecksRemaining] = useState(0);
 
 
   // 👇 Called once on page load to reset the game session
@@ -54,6 +55,7 @@ function App() {
             setCards((prevCards) => [...prevCards, data.card]);
             setRunningCount(data.count);
             setCardsRemaining(data.cards_remaining);
+            setDecksRemaining(data.decks_remaining);
           }
         }
 
@@ -72,7 +74,6 @@ function App() {
       <header className="top-navbar">
         <h1 className="logo">🃏 Hi-Lo Trainer</h1>
         <nav className="nav-links">
-          <a href="/">Home</a>
           <a href="/about">About</a>
           <a href="/stats">Stats</a>
         </nav>
@@ -84,6 +85,7 @@ function App() {
             
             <p><strong>Status:</strong> {message}</p>
             <p><strong>Cards Remaining:</strong> {cardsRemaining}</p>
+            <p><strong>Decks Remaining:</strong> {decksRemaining}</p>
           </div>
 
           <div className="game-center">
