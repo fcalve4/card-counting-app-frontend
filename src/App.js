@@ -78,11 +78,12 @@ function App() {
       <div className="App-header">
         <div className="game-layout">
           <div className="game-left">
-            <p><strong>Running Count:</strong> {runningCount}</p>
+            
             <p><strong>Status:</strong> {message}</p>
           </div>
 
           <div className="game-center">
+            <p><strong>Running Count:</strong> {runningCount}</p>
             {cards.length === 0 ? (
               <img
                 src="/cards/back_dark.png"
