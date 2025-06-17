@@ -140,7 +140,7 @@ function App() {
       <header className="top-navbar">
         <h1 className="logo">🃏 Hi-Lo Trainer</h1>
           <nav className="nav-links">
-        
+            <a href="https://github.com/fcalve4/" target="_blank" rel="noopener noreferrer">GitHub</a>
           </nav>
 
       </header>
