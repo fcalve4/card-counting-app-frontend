@@ -6,6 +6,8 @@ function App() {
   const [output, setOutput] = useState("");
   const [runningCount, setRunningCount] = useState(0);
   const [cards, setCards] = useState([]);
+  const [cardsRemaining, setCardsRemaining] = useState(0);
+
 
   // 👇 Called once on page load to reset the game session
   useEffect(() => {
@@ -51,6 +53,7 @@ function App() {
             const data = JSON.parse(line);
             setCards((prevCards) => [...prevCards, data.card]);
             setRunningCount(data.count);
+            setCardsRemaining(data.cards_remaining);
           }
         }
 
@@ -80,10 +83,13 @@ function App() {
           <div className="game-left">
             
             <p><strong>Status:</strong> {message}</p>
+            <p><strong>Cards Remaining:</strong> {cardsRemaining}</p>
           </div>
 
           <div className="game-center">
             <p><strong>Running Count:</strong> {runningCount}</p>
+            
+
             {cards.length === 0 ? (
               <img
                 src="/cards/back_dark.png"
