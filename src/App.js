@@ -9,6 +9,9 @@ function App() {
   const [cardsRemaining, setCardsRemaining] = useState(0);
   const [decksRemaining, setDecksRemaining] = useState(0);
 
+  const [showCount, setShowCount] = useState(true);
+
+
 
   // 👇 Called once on page load to reset the game session
   useEffect(() => {
@@ -75,7 +78,7 @@ function App() {
         <h1 className="logo">🃏 Hi-Lo Trainer</h1>
         <nav className="nav-links">
           <a href="/about">About</a>
-          <a href="/stats">Stats</a>
+          <a href="/stats">Settings</a>
         </nav>
       </header>
 
@@ -89,7 +92,11 @@ function App() {
           </div>
 
           <div className="game-center">
-            <p><strong>Running Count:</strong> {runningCount}</p>
+          <button className="running-count-button" onClick={() => setShowCount(prev => !prev)}>
+          {showCount ? "Hide" : "Show"} Running Count </button>
+          <p><strong>Running Count:</strong> {showCount ? runningCount : "•••"}</p>
+
+
             
 
             {cards.length === 0 ? (
