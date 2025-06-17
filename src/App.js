@@ -6,15 +6,75 @@ function App() {
   const [output, setOutput] = useState("");
   const [runningCount, setRunningCount] = useState(0);
   const [cards, setCards] = useState([]);
-  const [cardsRemaining, setCardsRemaining] = useState(0);
-  const [decksRemaining, setDecksRemaining] = useState(0);
-
+  const [cardsRemaining, setCardsRemaining] = useState(312);
+  const [decksRemaining, setDecksRemaining] = useState(6);
+  const [numDecks, setNumDecks] = useState(6);
   const [showCount, setShowCount] = useState(true);
 
-
-
-  // 👇 Called once on page load to reset the game session
   useEffect(() => {
+    const initSession = async () => {
+      try {
+        // Reset to default 6 decks
+        await fetch('http://localhost:8000/settings', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ num_decks: 6 }),
+        });
+  
+        // Then start a new game session
+        await fetch("http://localhost:8000/start", {
+          method: "POST",
+        });
+  
+        // Reset frontend state
+        setNumDecks(6);
+        setCardsRemaining(6 * 52);
+        setDecksRemaining(6);
+        setRunningCount(0);
+        setCards([]);
+        setMessage("New game session started. Click Deal to begin.");
+      } catch (err) {
+        console.error("Failed to initialize session:", err);
+        setMessage("Error starting new session.");
+      }
+    };
+  
+    initSession();
+  }, []);
+  
+
+  const handleDeckChange = async (e) => {
+    const newDecks = parseInt(e.target.value);
+    setNumDecks(newDecks);
+  
+    try {
+      // Update the backend setting
+      await fetch('http://localhost:8000/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ num_decks: newDecks }),
+      });
+  
+      // Start a new game session
+      await fetch("http://localhost:8000/start", {
+        method: "POST",
+      });
+  
+      // Reset frontend state
+      setDecksRemaining(newDecks);
+      setCardsRemaining(newDecks * 52);
+      setRunningCount(0);
+      setCards([]);
+      setMessage(`New game session started with ${newDecks} deck${newDecks > 1 ? 's' : ''}.`);
+    } catch (err) {
+      console.error("Failed to update decks or restart game", err);
+      setMessage("Error updating deck count or starting session.");
+    }
+  };
+  
+
+  // Called once on page load to reset the game session
+  const startNewSession = () => {
     fetch("http://localhost:8000/start", {
       method: "POST",
     })
@@ -22,6 +82,8 @@ function App() {
       .then((data) => {
         console.log("New session started:", data);
         setRunningCount(0);
+        setDecksRemaining(numDecks);
+        setCardsRemaining(numDecks * 52);
         setCards([]);
         setMessage("New game session started. Click Deal to begin.");
       })
@@ -29,7 +91,8 @@ function App() {
         console.error("Failed to start session:", err);
         setMessage("Error starting new session.");
       });
-  }, []);
+  };
+
 
   const fetchGameData = async () => {
     setMessage("Dealing cards...");
@@ -76,10 +139,10 @@ function App() {
     <div className="App">
       <header className="top-navbar">
         <h1 className="logo">🃏 Hi-Lo Trainer</h1>
-        <nav className="nav-links">
-          <a href="/about">About</a>
-          <a href="/stats">Settings</a>
-        </nav>
+          <nav className="nav-links">
+        
+          </nav>
+
       </header>
 
       <div className="App-header">
@@ -115,7 +178,23 @@ function App() {
           </div>
 
           <div className="game-right">
-            <button className="Deal-button" onClick={fetchGameData}>Deal</button>
+          <div style={{ marginBottom: "1rem" }}>
+        <label htmlFor="deck-select">Number of Decks: </label>
+        <select
+          id="deck-select"
+          value={numDecks}
+          onChange={handleDeckChange}
+        >
+          {[1, 2, 4, 6, 8].map((n) => (
+            <option key={n} value={n}>
+              {n} Deck{n > 1 ? "s" : ""}
+            </option>
+          ))}
+        </select>
+      </div>
+
+            <button className="Big-button" onClick={fetchGameData}>Deal</button>
+            <button className="Big-button" onClick={startNewSession}>Shuffle</button>
           </div>
         </div>
 

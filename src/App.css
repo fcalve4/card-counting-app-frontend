@@ -9,7 +9,7 @@
   color: white;
 }
 
-.Deal-button {
+.Big-button {
   background-color: #bccdd1;
   color: #282c34;
   border: none;
@@ -95,9 +95,31 @@
   margin: 10px 0;
   background-color: #bccdd1;
   border: 2px solid #444;
-  border-radius: 8px;
+  border-radius: 8px; 
   font-weight: bold;
   color: #333;
   cursor: pointer;
   transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+#deck-select {
+  padding: 10px 16px;
+  font-size: 1rem;
+  background-color: #bccdd1;
+  color: #282c34;
+  border: 2px solid #444;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+#deck-select:hover {
+  background-color: #aebfc3;
+}
+
+#deck-select:focus {
+  outline: none;
+  border-color: #666;
 }
