@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
@@ -7,11 +7,28 @@ function App() {
   const [runningCount, setRunningCount] = useState(0);
   const [cards, setCards] = useState([]);
 
+  // 👇 Called once on page load to reset the game session
+  useEffect(() => {
+    fetch("http://localhost:8000/start", {
+      method: "POST",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("New session started:", data);
+        setRunningCount(0);
+        setCards([]);
+        setMessage("New game session started. Click Deal to begin.");
+      })
+      .catch((err) => {
+        console.error("Failed to start session:", err);
+        setMessage("Error starting new session.");
+      });
+  }, []);
+
   const fetchGameData = async () => {
     setMessage("Dealing cards...");
     setOutput("");
     setCards([]);
-    setRunningCount(0);
 
     try {
       const response = await fetch("http://localhost:8000/stream");
@@ -59,35 +76,32 @@ function App() {
       </header>
 
       <div className="App-header">
-  <div className="game-layout">
-    <div className="game-left">
-      <p><strong>Running Count:</strong> {runningCount}</p>
-      <p><strong>Status:</strong> {message}</p>
-    </div>
+        <div className="game-layout">
+          <div className="game-left">
+            <p><strong>Running Count:</strong> {runningCount}</p>
+            <p><strong>Status:</strong> {message}</p>
+          </div>
 
-    <div className="game-center">
-  {cards.length === 0 ? (
-    <img
-      src="/cards/back_dark.png" // or any placeholder like "AS.png"
-      alt="Card back"
-      className="card-image"
-    />
-  ) : (
-    <img
-      src={`/cards/${cards[cards.length - 1]}.png`}
-      alt={cards[cards.length - 1]}
-      className="card-image"
-    />
-  )}
-</div>
+          <div className="game-center">
+            {cards.length === 0 ? (
+              <img
+                src="/cards/back_dark.png"
+                alt="Card back"
+                className="card-image"
+              />
+            ) : (
+              <img
+                src={`/cards/${cards[cards.length - 1]}.png`}
+                alt={cards[cards.length - 1]}
+                className="card-image"
+              />
+            )}
+          </div>
 
-
-
-    <div className="game-right">
-      <button className="Deal-button" onClick={fetchGameData}>Deal</button>
-    </div>
-  </div>
-
+          <div className="game-right">
+            <button className="Deal-button" onClick={fetchGameData}>Deal</button>
+          </div>
+        </div>
 
         <pre>{output}</pre> {/* Optional raw output */}
       </div>
